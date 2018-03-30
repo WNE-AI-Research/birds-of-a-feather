@@ -13,6 +13,7 @@ public class Experiment1 {
 		//searcher = new AStarSearcher(new RankHeuristic());
 	    //searcher = new AStarSearcher(new SuitHeuristic());
 	    searcher = new AStarSearcher(new RankSuitHeuristic());
+    	//searcher = new AStarSearcher(new SuitBalanceHeuristic());
     	ArrayList<Integer> unsolvable = new ArrayList<Integer>();
     	for (int seed = startSeed; seed < startSeed + numSeeds; seed++) {
     		System.out.print("Seed " + seed + ": ");    	
