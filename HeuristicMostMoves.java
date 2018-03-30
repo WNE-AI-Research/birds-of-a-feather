@@ -32,7 +32,7 @@ public class HeuristicMostMoves implements HeuristicInterface {
 				}
 			}
 		}
-		return 1/(1+possibleMoves);
+		return 1.0/(1+possibleMoves);
 	}
 
 }

@@ -1,4 +1,4 @@
-public class RankHeuristic implements HeuristicInterface{
+public class RankBalanceHeuristic implements HeuristicInterface{
 	
 	//private int[] rankcount; //corresponding to A-10,J-K
 	//private double value; //heuristic value for node
@@ -45,9 +45,27 @@ public class RankHeuristic implements HeuristicInterface{
 		//		+ "\nNumber of DIAMONDS: " + rankcount[3]);
 		//sum of all (suitcounts/number of cards)^2
 		value = 0;
+		int[][] rank_clusters = new int[13][3];
 		for (int i = 0; i < rankcount.length; i++) {
-			value += (rankcount[i] * 1.0)/size;
+			int[] cluster;
+			if (i == 0 ) {
+				cluster = new int[2];
+				cluster[0] = rankcount[i];
+				cluster [1] = rankcount[i+1];
+			}
+			else if (i == rankcount.length-1) {
+				cluster = new int[2];
+				cluster[0] = rankcount[i];
+				cluster[1] = rankcount[i-1];
+			}
+			else {
+				cluster = new int[3];
+				cluster[0] = rankcount[i];
+				cluster[1] = rankcount[i-1];
+				cluster[2] = rankcount[i+1];
+			}
+			rank_clusters[i] = cluster;
 		}
-		return 1/(1+value); //invert for lower heursitic value with better state and prevent division by 0
+		return 1/(1+(value/size)); //invert for lower heursitic value with better state and prevent division by 0
 	}
 }

@@ -1,14 +1,20 @@
-public class SuitHeuristic implements HeuristicInterface{
+public class SuitBalanceHeuristic implements HeuristicInterface{
 	
 	//private int[] suitcount = {0,0,0,0}; //corresponding to C, H, S , D
 	//private double value; //heuristic value for node
 	
+	/* This heuristic compares the computed Manhattan distance of the node to the assumed
+	 * ideal distance of [4,4,4,4], further implementations will see if this can be
+	 * made better when suits are missing
+	 */
 	public double h(SearchNode n) {
 		BirdsOfAFeatherNode node = (BirdsOfAFeatherNode) n;
 		Card[][] grid = node.grid;
 		int nrow = grid.length;
 		int ncol = grid[0].length;
+		//int[] defaultsuit = {4,4,4,4};
 		int[] suitcount = {0,0,0,0};
+		
 		double value = 0;
 		Card current;
 		int size = 0; //number of cards in grid
@@ -29,10 +35,10 @@ public class SuitHeuristic implements HeuristicInterface{
 		//		+ "\nNumber of DIAMONDS: " + suitcount[3]);
 		//sum of all (suitcounts/number of cards)^2
 		for (int i = 0; i < suitcount.length; i++) {
-			double count = suitcount[i] * 1.0;
-			double suit_rank = (count/size); 
-			value += (suit_rank*suit_rank);
+			double diff = 1.0*suitcount[i];//-(size/4);
+			value += diff*diff;
 		}
-		return 1/(1+value); //invert for lower heursitic value with better state and prevent division by 0
+		value = Math.sqrt( value );
+		return 1/(1+value);
 	}
 }

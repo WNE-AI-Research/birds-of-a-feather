@@ -10,7 +10,7 @@ public class AStarSearcher extends Searcher {
 
 	HashSet<String> closed = new HashSet<String>();
 	HeuristicInterface heuristic;
-	double minValue = Double.MAX_VALUE;
+	
 	
 	public AStarSearcher(HeuristicInterface h){
 		heuristic = h;
@@ -35,6 +35,7 @@ public class AStarSearcher extends Searcher {
 		    // (false).
 		    if (list.isEmpty()) {
 		    	System.out.println("Number of nodes visited: " + nodeCount );
+		    	nodeCount = 0;
 		    	return false;
 		    }
 	
@@ -46,7 +47,7 @@ public class AStarSearcher extends Searcher {
 		    if (closed.contains(str))
 		    	continue;
 		    closed.add(str);
-	//	    System.out.println(str);
+//		    System.out.println(str);
 		    nodeCount++;
 	
 		    // If the search node is a goal node, store it and return
@@ -54,6 +55,7 @@ public class AStarSearcher extends Searcher {
 		    if (node.isGoal()) {
 		    	goalNode = node;
 		    	System.out.println("Number of nodes visited: " + nodeCount );
+		    	nodeCount = 0;
 		    	return true;
 		    }
 	
@@ -78,13 +80,15 @@ public class AStarSearcher extends Searcher {
 
 		SearchNode bestNode = null;
 		double currentValue;
+		double minValue = Double.MAX_VALUE;
 		
 		for(SearchNode n : list){
-			currentValue =  n.depth + heuristic.h(n);
-			if( currentValue < minValue )
-				//System.out.println(currentValue);
+			currentValue =  heuristic.h(n);
+			if( currentValue < minValue ) {
+//				System.out.println(currentValue);
 				minValue = currentValue;
 				bestNode = n;
+			}
 		}
 		return bestNode;
     }
