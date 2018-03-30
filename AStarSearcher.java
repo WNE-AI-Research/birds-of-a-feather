@@ -83,7 +83,7 @@ public class AStarSearcher extends Searcher {
 		double minValue = Double.MAX_VALUE;
 		
 		for(SearchNode n : list){
-			currentValue =  heuristic.h(n);
+			currentValue =  heuristic.h(n) - n.depth;
 			if( currentValue < minValue ) {
 //				System.out.println(currentValue);
 				minValue = currentValue;
